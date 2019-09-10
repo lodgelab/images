@@ -1,0 +1,129 @@
+import React, { Component } from 'react';
+import HeroImages from './HeroImages.jsx';
+import PopGallery from './PopGallery.jsx';
+import axios from 'axios';
+
+
+const RalewayFont = styled.div`
+font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+`
+
+class Images extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+       images:[],
+       tinyGalleryImages: undefined,
+       imagesForHero: undefined,
+       toggle: false,
+       currentPhoto:{},
+       backButtonImage:{},
+       nextButtonImage:{},
+       imagesLength: 0
+    }
+    this.onToggle = this.onToggle.bind(this)
+    this.changeCurrentPhoto = this.changeCurrentPhoto.bind(this)
+  }
+
+  componentDidMount(){
+    let listing = window.location.href.split('/')[5];
+    return axios.get(`http://ec2-18-220-164-99.us-east-2.compute.amazonaws.com:3777/api/listings/${listing}/images`)
+    .then((response) => {
+      this.setState({
+        images: response.data[0].images,
+        imagesForHero: response.data[0].images.slice(0,5),
+        currentPhoto: response.data[0].images[0],
+        imagesLength: response.data[0].images.length
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
+  onToggle(){
+    let currentToggle = this.state.toggle;
+    this.setState({toggle: !currentToggle})
+  }
+
+  backNextCounterFinder(current){
+    let currentPlaceNumber = current.imagePlaceNumber;
+    let images = this.state.images;
+    let back = images[currentPlaceNumber - 2]
+    let count;
+    let next = images[currentPlaceNumber]
+    if (images[currentPlaceNumber - 2] === undefined){
+      back = images[images.length - 1]
+      count = -1
+    } else if (images[currentPlaceNumber] === undefined){
+      next = images[0]
+      count =  -5
+    }else if (images[currentPlaceNumber - 3] === undefined) {
+      count =  -2
+    } else if (images[currentPlaceNumber + 1] === undefined) {
+      count =  -4
+    } else {
+      count =  -3
+    }
+    this.setState({
+      backButtonImage: back,
+      nextButtonImage: next,
+    })
+    return count
+  }
+  changeCurrentPhoto(current){
+    let currentPlaceNumber = current.imagePlaceNumber;
+    let images = this.state.images;
+    let counter = this.backNextCounterFinder(current);
+    let newImagesArray = [];
+    const arrayCreator = () => {
+      //base case
+      // if newImagesArray has a length of 5
+      if (newImagesArray.length === 5){
+        //return nothing
+        return;
+      }
+      // recursive case
+      // push of images with the index of placement number to newImagesArray
+      newImagesArray.push(images[currentPlaceNumber + counter])
+      //add one to counter
+      counter++
+      // run function again
+      arrayCreator()
+    }
+
+    arrayCreator()
+     this.setState({
+       currentPhoto: current,
+       tinyGalleryImages: newImagesArray,
+       toggle:true
+      })
+  }
+
+  render(){
+    return (
+      <RalewayFont>
+        {this.state.imagesForHero && !this.state.toggle &&
+        <HeroImages
+           changeCurrentPhoto={this.changeCurrentPhoto}
+           imagesForHero={this.state.imagesForHero}
+           onToggle={this.onToggle}
+        />
+        }
+        {this.state.toggle &&
+        <PopGallery
+          changeCurrentPhoto={this.changeCurrentPhoto}
+          currentPhoto={this.state.currentPhoto}
+          tinyGalleryImages={this.state.tinyGalleryImages}
+          onToggle={this.onToggle}
+          backButtonImage = {this.state.backButtonImage}
+          nextButtonImage = {this.state.nextButtonImage}
+          imagesLength = {this.state.imagesLength}
+        />
+        }
+      </RalewayFont>
+
+    )
+  }
+}
+export default Images;
