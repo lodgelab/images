@@ -15,6 +15,7 @@
 1. [Usage](#Usage)
 2. [Requirements](#requirements)
 3. [Development](#development)
+4. [Restful API](#API)
 
 ## Usage
 
@@ -42,3 +43,54 @@ npm run seed
 npm run react-dev
 npm run start (in a seperate bash window)
 ```
+
+## API
+
+### GET
+> /api/listings/:listing/images
+
+Response:
+```json
+[
+    {
+        "_id": "5d602d3c0eaedd182ef1032e",
+        "listingId": 0,
+        "images": [
+            {
+                "_id": "5d602d3c0eaedd182ef1032f",
+                "imageId": 0,
+                "imagePlaceNumber": 0,
+                "imageSource": "https://images-for-fec-project.s3-us-west-1.amazonaws.com/67.jpg",
+                "imageDescription": "Farm-to-table meh disrupt blog enamel pin gentrify slow-carb direct."
+            },
+            {
+                "_id": "5d602d3c0eaedd182ef10330",
+                "imageId": 1,
+                "imagePlaceNumber": 1,
+                "imageSource": "https://images-for-fec-project.s3-us-west-1.amazonaws.com/41.jpg",
+                "imageDescription": "Helvetica mustache palo santo snackwave synth selfies vaporware."
+            },
+        ]
+    }
+]
+```
+
+### POST
+> /api/listings/:listing/images
+
+Request:
+```json
+FormData Object
+```
+### PUT
+> /api/listings/:listing/images/:image
+
+Request:
+```json
+FormData Object
+```
+
+### DELETE
+> DELETE /api/listings/:listing/images/:image
+
+
