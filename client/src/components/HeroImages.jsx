@@ -6,18 +6,12 @@ const Grid = styled.div`
   flex-direction: row;
   border:2px solid #021a40;
   position: static;
-`
+`;
 const SmallContainer = styled.div`
   display: flex;
   flex-direction: row;
   position: relative;
-`
-
-const anotherDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
+`;
 
 const HeaderImg = styled.img`
   width: 700px;
@@ -31,12 +25,12 @@ const HeaderImg = styled.img`
     -o-transform:scale(1.1);
     transform:scale(1.1);
   }
-`
+`;
 
 const ImgWrapper = styled.div`
   overflow: hidden;
   border:2px solid #021a40;
-`
+`;
 
 const Img = styled.img`
   width: 374.5px;
@@ -50,7 +44,7 @@ const Img = styled.img`
     -o-transform:scale(1.1);
     transform:scale(1.1);
   }
-`
+`;
 
 
 const Button = styled.button`
@@ -82,30 +76,30 @@ HeaderImg.displayName = 'HeaderImg';
 
 const HeroImages = (props) => (
   <div>
-     <Grid>
-       <ImgWrapper>
-        <HeaderImg onClick={()=>{props.changeCurrentPhoto(props.imagesForHero[0])}} src={props.imagesForHero[0].imageSource}/>
-        </ImgWrapper>
-       <SmallContainer>
-       <anotherDiv>
-        <ImgWrapper>
-          <Img onClick={()=>{props.changeCurrentPhoto(props.imagesForHero[1])}} src={props.imagesForHero[1].imageSource}/>
-        </ImgWrapper>
-        <ImgWrapper>
-           <Img onClick={()=>{props.changeCurrentPhoto(props.imagesForHero[2])}} src={props.imagesForHero[2].imageSource}/>
-        </ImgWrapper>
-        </anotherDiv>
-        <anotherDiv>
-        <ImgWrapper>
-           <Img onClick={()=>{props.changeCurrentPhoto(props.imagesForHero[3])}} src={props.imagesForHero[3].imageSource}/>
-        </ImgWrapper>
-        <ImgWrapper>
-          <Img onClick={()=>{props.changeCurrentPhoto(props.imagesForHero[4])}} src={props.imagesForHero[4].imageSource}/>
-          <Button className="show-images" onClick={()=>{props.changeCurrentPhoto(props.imagesForHero[0])}}>View Photos</Button>
-        </ImgWrapper>
-        </anotherDiv>
-        </SmallContainer>
-      </Grid>
+    <Grid>
+      <ImgWrapper>
+        <HeaderImg onClick={() => { props.changeCurrentPhoto(props.imagesForHero[0]); }} src={props.imagesForHero[0].imageSource} />
+      </ImgWrapper>
+      <SmallContainer>
+        <div>
+          <ImgWrapper>
+            <Img onClick={() => { props.changeCurrentPhoto(props.imagesForHero[1]); }} src={props.imagesForHero[1].imageSource} />
+          </ImgWrapper>
+          <ImgWrapper>
+            <Img onClick={() => { props.changeCurrentPhoto(props.imagesForHero[2]); }} src={props.imagesForHero[2].imageSource} />
+          </ImgWrapper>
+        </div>
+        <div>
+          <ImgWrapper>
+            <Img onClick={() => { props.changeCurrentPhoto(props.imagesForHero[3]); }} src={props.imagesForHero[3].imageSource} />
+          </ImgWrapper>
+          <ImgWrapper>
+            <Img onClick={() => { props.changeCurrentPhoto(props.imagesForHero[4]); }} src={props.imagesForHero[4].imageSource} />
+            <Button className="show-images" onClick={() => { props.changeCurrentPhoto(props.imagesForHero[0]); }}>View Photos</Button>
+          </ImgWrapper>
+        </div>
+      </SmallContainer>
+    </Grid>
 
 
   </div>
