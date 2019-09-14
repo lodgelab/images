@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const compression = require('compression');
-const dbC = require('../database/indexC.js');
+// const dbC = require('../database/indexC.js');
 const dbPG = require('../database/indexPG.js');
 
 const app = express();
@@ -20,26 +20,36 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.get('/api/listings/:listing/images', (req, res) => {
   const listingId = req.params.listing;
   // CASSANDRA
-  dbC
-    .getListing(listingId)
-    .then((result) => {
-      const data = [{ listingId, images: [] }];
-      for (let i = 0; i < result.rows.length; i++) {
-        const image = {
-          imageId: i + 1,
-          imagePlaceNumber: i + 1,
-          imageSource: constructURL(result.rows[i].imageid),
-          imageDescription: result.rows[i].imagedescription,
-        };
-        data[0].images.push(image);
-      }
-      res.send(data);
-    });
+  // dbC
+  //   .getListing(listingId)
+  //   .then((result) => {
+  //     const data = [{ listingId, images: [] }];
+  //     for (let i = 0; i < result.rows.length; i += 1) {
+  //       const image = {
+  //         imageId: i + 1,
+  //         imagePlaceNumber: i + 1,
+  //         imageSource: constructURL(result.rows[i].image_id),
+  //         imageDescription: result.rows[i].image_description,
+  //       };
+  //       data[0].images.push(image);
+  //     }
+  //     res.send(data);
+  //   });
   // POSTGRESS
   dbPG
     .getListing(listingId)
     .then((result) => {
-      res.send(result);
+      const data = [{ listingId, images: [] }];
+      for (let i = 0; i < result.rows.length; i += 1) {
+        const image = {
+          imageId: i + 1,
+          imagePlaceNumber: i + 1,
+          imageSource: constructURL(result.rows[i].image_id),
+          imageDescription: result.rows[i].image_description,
+        };
+        data[0].images.push(image);
+      }
+      res.send(data);
     });
 });
 
