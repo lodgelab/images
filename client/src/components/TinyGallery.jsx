@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 const Img = styled.img`
   height: 65px;
   width: 65px;
@@ -11,7 +10,7 @@ const Img = styled.img`
     opacity: 1;
   }
 
-`
+`;
 const CurrentImg = styled.img`
   height: 65px;
   width: 65px;
@@ -19,7 +18,7 @@ const CurrentImg = styled.img`
   border-radius: 5px;
   margin: 7px;
   opacity: 1;
-`
+`;
 
 const EndImgs = styled.img`
   height: 65px;
@@ -34,7 +33,7 @@ const EndImgs = styled.img`
   &:hover {
     opacity: 1;
   }
-`
+`;
 const StartImgs = styled.img`
 height: 65px;
 width: 40px;
@@ -48,7 +47,7 @@ clip-path: inset(0 0 0 51%);
 &:hover {
   opacity: 1;
 }
-`
+`;
 
 const CurrentEndImg = styled.img`
   height: 65px;
@@ -61,7 +60,7 @@ const CurrentEndImg = styled.img`
   &:hover {
     opacity: 1;
   }
-`
+`;
 
 const CurrentStartImg = styled.img`
   height: 65px;
@@ -74,35 +73,35 @@ const CurrentStartImg = styled.img`
   &:hover {
     opacity: 1;
   }
-`
+`;
 
-const TinyGallery = ({tinyGalleryImages, currentPhoto, changeCurrentPhoto}) => (
+const TinyGallery = ({ tinyGalleryImages, currentPhoto, changeCurrentPhoto }) => (
   <div id="tiny-gallery">
 
-    {tinyGalleryImages.map((image, index) =>{
-      if(image.imageId === currentPhoto.imageId){
-        return (<CurrentImg key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if (tinyGalleryImages.length - 1 === index && tinyGalleryImages[0].imageId === currentPhoto.imageId){
-        return (<CurrentEndImg key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if (index === 0 && tinyGalleryImages[tinyGalleryImages.length - 1].imageId === currentPhoto.imageId){
-        return (<CurrentStartImg key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if (index === 0 && tinyGalleryImages[tinyGalleryImages.length - 2].imageId === currentPhoto.imageId){
-        return (<CurrentStartImg key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if (tinyGalleryImages.length - 1 === index && tinyGalleryImages[1].imageId === currentPhoto.imageId){
-        return (<CurrentEndImg key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if (index === 0 && tinyGalleryImages[1].imageId === currentPhoto.imageId ){
-        return (<Img key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if (index === tinyGalleryImages.length - 1&& tinyGalleryImages[tinyGalleryImages.length - 2].imageId === currentPhoto.imageId ){
-          return (<Img key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if(index === 0 ){
-        return (<StartImgs key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else if (tinyGalleryImages.length - 1 === index){
-        return (<EndImgs key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
-      } else {
-        return (<Img key={index} className="tiny-image" src={image.imageSource} onClick={()=>(changeCurrentPhoto(image))} />)
+    {tinyGalleryImages.map((image, index) => {
+      if (image.imageId === currentPhoto.imageId) {
+        return (<CurrentImg key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (tinyGalleryImages.length - 1 === index && tinyGalleryImages[0].imageId === currentPhoto.imageId) {
+        return (<CurrentEndImg key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (index === 0 && tinyGalleryImages[tinyGalleryImages.length - 1].imageId === currentPhoto.imageId) {
+        return (<CurrentStartImg key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (index === 0 && tinyGalleryImages[tinyGalleryImages.length - 2].imageId === currentPhoto.imageId) {
+        return (<CurrentStartImg key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (tinyGalleryImages.length - 1 === index && tinyGalleryImages[1].imageId === currentPhoto.imageId) {
+        return (<CurrentEndImg key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (index === 0 && tinyGalleryImages[1].imageId === currentPhoto.imageId) {
+        return (<Img key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (index === tinyGalleryImages.length - 1 && tinyGalleryImages[tinyGalleryImages.length - 2].imageId === currentPhoto.imageId) {
+        return (<Img key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (index === 0) {
+        return (<StartImgs key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+      } if (tinyGalleryImages.length - 1 === index) {
+        return (<EndImgs key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
       }
+      return (<Img key={index} className="tiny-image" src={image.imageSource} onClick={() => (changeCurrentPhoto(image))} />);
+
     })}
   </div>
-)
+);
 
 export default TinyGallery;
