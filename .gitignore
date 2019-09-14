@@ -2,3 +2,7 @@ node_modules
 smalltest.csv
 smalltest.csv.gz
 10mData.csv.gz
+database/postgres/config.js
+10mData.csv
+10mdata.csv.gz
+10mData.test.csv.gz

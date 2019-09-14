@@ -3,12 +3,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const compression = require('compression');
-const db = require('../database/indexC.js');
-// const db = require('../database/listings.js');
-
+const dbC = require('../database/indexC.js');
+const dbPG = require('../database/indexPG.js');
 
 const app = express();
-
 
 app.use(morgan('dev'));
 app.use(cors());
@@ -21,14 +19,11 @@ app.use(express.static(`${__dirname}/../client/dist`));
 
 app.get('/api/listings/:listing/images', (req, res) => {
   const listingId = req.params.listing;
-  db.getListing(listingId)
+  // CASSANDRA
+  dbC
+    .getListing(listingId)
     .then((result) => {
-      const data = [
-        {
-          listingId,
-          images: [],
-        },
-      ];
+      const data = [{ listingId, images: [] }];
       for (let i = 0; i < result.rows.length; i++) {
         const image = {
           imageId: i + 1,
@@ -39,6 +34,12 @@ app.get('/api/listings/:listing/images', (req, res) => {
         data[0].images.push(image);
       }
       res.send(data);
+    });
+  // POSTGRESS
+  dbPG
+    .getListing(listingId)
+    .then((result) => {
+      res.send(result);
     });
 });
 
