@@ -35,6 +35,7 @@
     "line-by-line": "^0.1.6",
     "mongodb": "^3.3.0",
     "morgan": "^1.9.1",
+    "newrelic": "^5.11.0",
     "nodemon": "^1.19.1",
     "pg": "^7.12.1",
     "pg-promise": "^9.1.4",
