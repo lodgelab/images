@@ -34,10 +34,6 @@ const editDescription = (imageId, desc) => pool
   .query('UPDATE image SET image_description=($1) WHERE id=($2);', [desc, imageId])
   .then((result) => result);
 
-postImage(9999999, 201, 'hi', 523).then((result) => {
-  console.log(result);
-});
-
 module.exports = {
   postImage,
   editImage,
