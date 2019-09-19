@@ -3,7 +3,7 @@ const fs = require('fs');
 const zlib = require('zlib');
 
 const gzip = zlib.createGzip();
-const out = fs.createWriteStream('test1.csv.gz');
+const out = fs.createWriteStream('new.csv.gz');
 gzip.pipe(out);
 const start = Date.now();
 const num = 10000000;
@@ -16,18 +16,31 @@ const logStats = (linesDone) => {
   if (linesDone % 10000 === 0) {
     const avg = getAvgSpeed(linesDone, Date.now() - start);
     console.log(`Time left: ${(calcTimeLeft(num, avg) / 60).toFixed(2)}m, AVG: ${avg.toFixed(2)}/s`);
-  }
-  if (linesDone % 10000 === 0) {
     console.log(linesDone);
   }
 };
 
+const users = [];
+for (let u = 0; u < 1000; u += 1) {
+  users.push(faker.internet.userName());
+}
+
+const images = [];
+for (let im = 0; im < 100; im += 1) {
+  images.push({
+    userId: faker.random.number(1000),
+    desc: faker.lorem.sentence(),
+  });
+}
+
 let i = 0;
 (async () => {
-  for (i = 1; i <= num; i += 1) {
+  for (i = 0; i < num; i += 1) {
     logStats(i);
+    const randUser = faker.random.number(1000);
     for (let j = 0; j < faker.random.number({ min: 5, max: 20 }); j += 1) {
-      const ableToWrite = gzip.write(`${i},${faker.random.number(100)},${faker.lorem.sentence()}\n`);
+      const randImg = faker.random.number(99);
+      const ableToWrite = gzip.write(`${i},${randImg},${images[randImg].desc},${images[randImg].userId},${users[images[randImg].userId]}\n`);
       if (!ableToWrite) {
         // eslint-disable-next-line no-await-in-loop
         await new Promise((resolve) => {

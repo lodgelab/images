@@ -7,3 +7,7 @@ database/postgres/config.js
 10mdata.csv.gz
 10mData.test.csv.gz
 newrelic.js
+new.csv.gz
+new2.csv.gz
+newtest.csv.gz
+newrelic_agent.log
