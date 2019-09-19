@@ -27,7 +27,7 @@ class Images extends Component {
 
   componentDidMount() {
     const listing = window.location.href.split('/')[5];
-    return axios.get(`http://172.31.2.121:3777/api/listings/${listing}/images`)
+    return axios.get(`http://52.53.169.85:3777/api/listings/${listing}/images`)
       .then((response) => {
         console.log('res:', response.data);
         console.log('res images: ', response.data[0].images);
