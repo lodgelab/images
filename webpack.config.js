@@ -14,6 +14,8 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: `${__dirname}/client/dist`,
+    library: 'RecommendationsModule',
+    libraryExport: 'default',
   },
 
 };

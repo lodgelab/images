@@ -30,4 +30,5 @@ CREATE TABLE IF NOT EXISTS tmp (
 );
 
 CREATE INDEX idx_listing_images 
-ON listing_images(listing_id);
+ON listing_images
+WITH HASH(listing_id);

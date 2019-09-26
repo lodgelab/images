@@ -1,13 +1,7 @@
 node_modules
-smalltest.csv
-smalltest.csv.gz
-10mData.csv.gz
-database/postgres/config.js
-10mData.csv
-10mdata.csv.gz
-10mData.test.csv.gz
 newrelic.js
-new.csv.gz
-new2.csv.gz
-newtest.csv.gz
 newrelic_agent.log
+database/config.js
+test.yml
+client/dist/bundle.js
+server-ssr/server-ssr.js

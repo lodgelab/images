@@ -1,11 +1,7 @@
-const { Client, Pool } = require('pg');
-const config = require('../database/postgres/config.js');
+const { Pool } = require('pg');
+const config = require('../database/config.js');
 
-const client = new Client(config);
 const pool = new Pool(config);
-
-// client.connect();
-pool.connect();
 
 const getListingImages = (id) => pool
   .query('SELECT lim.listing_id, lim.image_id, im.image_description FROM listing_images lim, images im WHERE listing_id=($1) and lim.image_id = im.id;', [id])
@@ -41,6 +37,5 @@ module.exports = {
   editDescription,
   getListingImages,
   getListingImage,
-  client,
   pool,
 };
