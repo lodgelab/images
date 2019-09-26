@@ -14,7 +14,7 @@
     "seed": "node seed/listings-seeder.js",
     "test": "jest",
     "ssr-dev": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
-    "ssr": "NODE_ENV=production webpack --confi webpack.server.js --mode=production"
+    "ssr": "NODE_ENV=production webpack --config webpack.server.js --mode=production"
   },
   "proxy": "http://localhost:3777",
   "jest": {
