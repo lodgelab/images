@@ -3,7 +3,7 @@ import React from 'react';
 import App from '../client/src/components/App.jsx';
 import dbPG from '../database/indexPG';
 
-const renderString = (req, res) => {
+export const renderString = (req, res) => {
   const id = req.params.listing;
   dbPG
     .getListingImages(req.params.listing)
@@ -15,4 +15,4 @@ const renderString = (req, res) => {
     });
 };
 
-export default renderString;
+// export renderString;

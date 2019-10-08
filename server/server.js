@@ -18,7 +18,7 @@ app.use(compression());
 app.use('/api/listings/:listing', express.static(`${__dirname}/../client/dist`));
 app.use(express.static('client/dist'));
 
-app.get('/ssr/listings/:listing', ssr.default);
+app.get('/listings/:listing', ssr.default);
 
 app.get('/api/listings/:listing/images', controller.getImages);
 
