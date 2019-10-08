@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import HeroImages from './HeroImages.jsx';
 import PopGallery from './PopGallery.jsx';
 
@@ -11,40 +12,41 @@ font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue
 class Images extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    const constructURL = (imageid) => `https://mock-property-images.s3-us-west-1.amazonaws.com/activities/fun-${imageid}.jpeg`;
+    const data = [{
+      listingId: props.images,
       images: [],
+    }];
+    for (let i = 0; i < props.images.length; i += 1) {
+      const image = {
+        imageId: i + 1,
+        imagePlaceNumber: i + 1,
+        imageSource: constructURL(props.images[i].image_id),
+        imageDescription: props.images[i].image_description,
+      };
+      data[0].images.push(image);
+    }
+    this.state = {
+      images: data[0].images,
+      imagesForHero: data[0].images.slice(0, 5),
+      currentPhoto: data[0].images[0],
+      imagesLength: data[0].images.length,
+      // images: [],
       tinyGalleryImages: undefined,
-      imagesForHero: undefined,
+      // imagesForHero: undefined,
       toggle: false,
-      currentPhoto: {},
+      // currentPhoto: {},
       backButtonImage: {},
       nextButtonImage: {},
-      imagesLength: 0,
+      // imagesLength: 0,
     };
     this.onToggle = this.onToggle.bind(this);
     this.changeCurrentPhoto = this.changeCurrentPhoto.bind(this);
   }
 
-  componentDidMount() {
-    const listing = window.location.href.split('/')[5];
-    return axios.get(`http://localhost:3777/api/listings/${listing}/images`)
-      .then((response) => {
-        console.log('res:', response.data);
-        console.log('res images: ', response.data[0].images);
-        this.setState({
-          images: response.data[0].images,
-          imagesForHero: response.data[0].images.slice(0, 5),
-          currentPhoto: response.data[0].images[0],
-          imagesLength: response.data[0].images.length,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   onToggle() {
-    const currentToggle = this.state.toggle;
+    const { toggle } = this.state;
+    const currentToggle = toggle;
     this.setState({ toggle: !currentToggle });
   }
 
@@ -58,7 +60,7 @@ class Images extends Component {
       back = images[images.length - 1];
       count = -1;
     } else if (images[currentPlaceNumber] === undefined) {
-      next = images[0];
+      [next] = images;
       count = -5;
     } else if (images[currentPlaceNumber - 3] === undefined) {
       count = -2;

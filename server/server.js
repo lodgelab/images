@@ -1,10 +1,11 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const compression = require('compression');
-const dbC = require('../database/indexC.js');
-const dbPG = require('../database/indexPG.js');
+const controller = require('./controller.js');
+const ssr = require('./ssr');
 
 const app = express();
 
@@ -15,36 +16,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
 
 app.use('/api/listings/:listing', express.static(`${__dirname}/../client/dist`));
-app.use(express.static(`${__dirname}/../client/dist`));
+app.use(express.static('client/dist'));
 
-app.get('/api/listings/:listing/images', (req, res) => {
-  const listingId = req.params.listing;
-  // CASSANDRA
-  dbC
-    .getListing(listingId)
-    .then((result) => {
-      const data = [{ listingId, images: [] }];
-      for (let i = 0; i < result.rows.length; i++) {
-        const image = {
-          imageId: i + 1,
-          imagePlaceNumber: i + 1,
-          imageSource: constructURL(result.rows[i].imageid),
-          imageDescription: result.rows[i].imagedescription,
-        };
-        data[0].images.push(image);
-      }
-      res.send(data);
-    });
-  // POSTGRESS
-  dbPG
-    .getListing(listingId)
-    .then((result) => {
-      res.send(result);
-    });
-});
+app.get('/listings/:listing', ssr.default);
+
+app.get('/api/listings/:listing/images', controller.getImages);
+
+app.delete('/api/listings/:listing/images/:image', controller.deleteImage);
+
+app.post('/api/listing/:listing/images/:image', controller.addImage);
+
+app.put('/api/listing/:listing/images/:image/description', controller.editDesc);
 
 app.listen(3777, () => {
   console.log('listening on port 3777');
 });
-
-const constructURL = (imageid) => `https://mock-property-images.s3-us-west-1.amazonaws.com/activities/fun-${imageid}.jpeg`;
